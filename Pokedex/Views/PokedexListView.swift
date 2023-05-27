@@ -15,6 +15,7 @@ struct PokedexListView: View {
     }
     
     var body: some View {
+        // TODO: Fix issue where navigating away from app causes list to repeat
         NavigationView {
             NavigationStack {
                 List(model.pokemon, id: \.uuid) { pokemon in
