@@ -8,7 +8,7 @@
 import Foundation
 import GRDB
 
-struct PokemonResult: Codable, FetchableRecord {
+struct PokemonResult: Codable, Hashable, FetchableRecord {
     let id: Int
     let name: String
     let height: Int

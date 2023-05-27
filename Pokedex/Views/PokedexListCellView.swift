@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PokedexListCellView: View {
+    @State private var showPokemonDetails = false
+    
     private let pokemon: PokemonResult
     private let screen = UIScreen.main.bounds
     
@@ -16,17 +18,6 @@ struct PokedexListCellView: View {
     }
     
     var body: some View {
-        Button {
-            // TODO: Navigate to details page
-        } label: {
-            cellLabel
-        }
-        .buttonStyle(BorderlessButtonStyle())
-    }
-    
-    // MARK: - Computed Views
-    
-    private var cellLabel: some View {
         HStack {
             icon
             VStack(alignment: .leading) {
@@ -34,6 +25,14 @@ struct PokedexListCellView: View {
                 nameLabel
                 typeRow
             }
+        }
+    }
+    
+    // MARK: - Computed Views
+    
+    private var pokemonDetailsNavigationLink: some View {
+        NavigationLink(destination: PokemonDetialsView(pokemon), isActive: $showPokemonDetails) {
+            EmptyView()
         }
     }
     

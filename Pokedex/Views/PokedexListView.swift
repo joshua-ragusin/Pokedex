@@ -16,17 +16,24 @@ struct PokedexListView: View {
     
     var body: some View {
         NavigationView {
-            List(model.pokemon, id: \.id) { pokemon in
-                LazyVStack(alignment: .leading) {
-                    PokedexListCellView(pokemon)
-                    Divider()
+            NavigationStack {
+                List(model.pokemon, id: \.id) { pokemon in
+                    LazyVStack(alignment: .leading) {
+                        NavigationLink(value: pokemon) {
+                            PokedexListCellView(pokemon)
+                        }
+                        Divider()
+                    }
                 }
-            }
-            .frame(maxWidth: .infinity)
-            .listStyle(.plain)
-            .navigationBarTitle("Pokedex", displayMode: .inline)
-            .task {
-                await model.loadPokemon()
+                .frame(maxWidth: .infinity)
+                .listStyle(.plain)
+                .navigationBarTitle("Pokedex", displayMode: .inline)
+                .navigationDestination(for: PokemonResult.self) { pokemon in
+                    PokemonDetialsView(pokemon)
+                }
+                .task {
+                    await model.loadPokemon()
+                }
             }
         }
     }
