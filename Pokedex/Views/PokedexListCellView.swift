@@ -53,21 +53,23 @@ struct PokedexListCellView: View {
     
     private var idLabel: some View {
         Text("#\(pokemon.id)")
+            .foregroundColor(.black)
     }
     
     private var nameLabel: some View {
         Text(pokemon.name.properCase)
+            .foregroundColor(.black)
+            .font(.title)
+            .fontWeight(.medium)
     }
     
     // TODO: Make nicer type labels
     private var typeRow: some View {
         HStack {
             typeLabel(for: pokemon.primaryTypeEnum)
-//                .frame(alignment: .leading)
             
             if let secondaryType = pokemon.secondaryTypeEnum {
                 typeLabel(for: secondaryType)
-//                    .frame(alignment: .leading)
             } else {
                 Spacer()
             }
