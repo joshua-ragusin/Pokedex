@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PokedexListCellView: View {
     private let pokemon: PokemonResult
+    private let screen = UIScreen.main.bounds
     
     init(_ pokemon: PokemonResult) {
         self.pokemon = pokemon
@@ -33,21 +34,21 @@ struct PokedexListCellView: View {
             VStack(alignment: .leading) {
                 idLabel
                 nameLabel
-                typeLabel
+                typeRow
             }
         }
     }
     
+    // TODO: Make icons look better (they're too small rn)
     private var icon: some View {
         AsyncImage(url: imageURL) { image in
             image
                 .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 45, height: 45)
-                .clipShape(Circle())
+                .scaledToFill()
         } placeholder: {
             ProgressView()
         }
+        .frame(width: 75, height: 100)
     }
     
     private var idLabel: some View {
@@ -59,13 +60,30 @@ struct PokedexListCellView: View {
     }
     
     // TODO: Make nicer type labels
-    private var typeLabel: some View {
+    private var typeRow: some View {
         HStack {
-            Text(pokemon.primaryTypeEnum.rawValue.properCase)
+            typeLabel(for: pokemon.primaryTypeEnum)
+//                .frame(alignment: .leading)
             
             if let secondaryType = pokemon.secondaryTypeEnum {
-                Text(secondaryType.rawValue.properCase)
+                typeLabel(for: secondaryType)
+//                    .frame(alignment: .leading)
+            } else {
+                Spacer()
             }
+        }
+        
+    }
+    
+    private func typeLabel(for type: PokemonTypes) -> some View {
+        ZStack(alignment: .center) {
+            Rectangle()
+                .cornerRadius(10)
+                .foregroundColor(type.color)
+                .frame(maxWidth: screen.width / 4.7)
+            Text(type.rawValue.properCase)
+                .foregroundColor(.white)
+                .fontWeight(.bold)
         }
     }
     

@@ -22,7 +22,7 @@ struct PokedexListView: View {
                     Divider()
                 }
             }
-            .navigationTitle("Pokedex")
+            .navigationBarTitle("Pokedex", displayMode: .inline)
             .task {
                 await model.loadPokemon()
             }

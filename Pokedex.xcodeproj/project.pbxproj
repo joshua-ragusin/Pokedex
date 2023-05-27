@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27AA1C362A22625A00944F37 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA1C352A22625A00944F37 /* Color.swift */; };
 		27FE537B2A2195EF00378DF4 /* PokedexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FE537A2A2195EF00378DF4 /* PokedexApp.swift */; };
 		27FE537D2A2195EF00378DF4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FE537C2A2195EF00378DF4 /* ContentView.swift */; };
 		27FE537F2A2195EF00378DF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27FE537E2A2195EF00378DF4 /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27AA1C352A22625A00944F37 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		27FE53772A2195EF00378DF4 /* Pokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27FE537A2A2195EF00378DF4 /* PokedexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexApp.swift; sourceTree = "<group>"; };
 		27FE537C2A2195EF00378DF4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				27FE53BF2A21B18000378DF4 /* String.swift */,
+				27AA1C352A22625A00944F37 /* Color.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				27FE53C02A21B18000378DF4 /* String.swift in Sources */,
 				27FE53AE2A2197C600378DF4 /* PokemonListAPI.swift in Sources */,
 				27FE53A82A21967400378DF4 /* SmallPopkemonResult.swift in Sources */,
+				27AA1C362A22625A00944F37 /* Color.swift in Sources */,
 				27FE53AA2A21970800378DF4 /* PokemonListResult.swift in Sources */,
 				27FE53C92A21D1C800378DF4 /* PokemonTypes.swift in Sources */,
 				27FE537B2A2195EF00378DF4 /* PokedexApp.swift in Sources */,
