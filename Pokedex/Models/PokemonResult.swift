@@ -19,6 +19,8 @@ struct PokemonResult: Codable, Hashable, FetchableRecord {
     let primaryType: String
     let secondaryType: String?
     
+    let battleStats: [PokemonStat]
+    
     var primaryTypeEnum: PokemonTypes {
         if let type = PokemonTypes(rawValue: primaryType) {
             return type
@@ -36,8 +38,13 @@ struct PokemonResult: Codable, Hashable, FetchableRecord {
         }
     }
     
+    // For hashable
+    static func == (lhs: PokemonResult, rhs: PokemonResult) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     enum PokemonKeys: String, CodingKey {
-        case id, name, height, weight, sprites, types
+        case id, name, height, weight, sprites, types, stats
     }
     
     enum SpriteKeys: String, CodingKey {
@@ -56,6 +63,7 @@ struct PokemonResult: Codable, Hashable, FetchableRecord {
         let container = try decoder.container(keyedBy: PokemonKeys.self)
         let spriteContainer = try container.nestedContainer(keyedBy: SpriteKeys.self, forKey: .sprites)
         let types = try container.decode([PokemonTypeResult].self, forKey: .types)
+        let stats = try container.decode([PokemonStatResult].self, forKey: PokemonKeys.stats)
         
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
@@ -72,6 +80,8 @@ struct PokemonResult: Codable, Hashable, FetchableRecord {
         } else {
             secondaryType = nil
         }
+        
+        battleStats = stats.map { $0.stat }
     }
 }
 
@@ -81,6 +91,17 @@ struct PokemonTypeResult: Codable {
 }
 
 struct PokemonType: Codable {
+    let name: String
+    let url: String
+}
+
+struct PokemonStatResult: Codable {
+    let base_stat: Int
+    let effort: Int
+    let stat: PokemonStat
+}
+
+struct PokemonStat: Codable, Hashable {
     let name: String
     let url: String
 }
