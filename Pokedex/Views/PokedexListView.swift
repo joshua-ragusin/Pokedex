@@ -22,6 +22,8 @@ struct PokedexListView: View {
                     Divider()
                 }
             }
+            .frame(maxWidth: .infinity)
+            .listStyle(.plain)
             .navigationBarTitle("Pokedex", displayMode: .inline)
             .task {
                 await model.loadPokemon()
