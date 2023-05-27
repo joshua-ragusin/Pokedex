@@ -30,6 +30,7 @@ struct PokedexListView: View {
                 .navigationBarTitle("Pokedex", displayMode: .inline)
                 .navigationDestination(for: PokemonResult.self) { pokemon in
                     PokemonDetialsView(pokemon)
+                        .navigationTitle(pokemon.name.properCase)
                 }
                 .task {
                     await model.loadPokemon()

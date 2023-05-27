@@ -30,12 +30,6 @@ struct PokedexListCellView: View {
     
     // MARK: - Computed Views
     
-    private var pokemonDetailsNavigationLink: some View {
-        NavigationLink(destination: PokemonDetialsView(pokemon), isActive: $showPokemonDetails) {
-            EmptyView()
-        }
-    }
-    
     // TODO: Make icons look better (they're too small rn)
     private var icon: some View {
         AsyncImage(url: imageURL) { image in
@@ -60,7 +54,6 @@ struct PokedexListCellView: View {
             .fontWeight(.medium)
     }
     
-    // TODO: Make nicer type labels
     private var typeRow: some View {
         HStack {
             typeLabel(for: pokemon.primaryTypeEnum)
@@ -74,6 +67,13 @@ struct PokedexListCellView: View {
         
     }
     
+    // MARK: - Computed Vars
+    
+    private var imageURL: URL? {
+        URL(string: pokemon.imageString)
+    }
+    
+    // MARK: - Helper Methods
     private func typeLabel(for type: PokemonTypes) -> some View {
         ZStack(alignment: .center) {
             Rectangle()
@@ -84,11 +84,5 @@ struct PokedexListCellView: View {
                 .foregroundColor(.white)
                 .fontWeight(.bold)
         }
-    }
-    
-    // MARK: - Computed Vars
-    
-    private var imageURL: URL? {
-        URL(string: pokemon.imageString)
     }
 }
