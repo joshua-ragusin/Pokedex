@@ -17,12 +17,9 @@ struct PokedexListView: View {
     var body: some View {
         NavigationView {
             NavigationStack {
-                List(model.pokemon, id: \.id) { pokemon in
-                    LazyVStack(alignment: .leading) {
-                        NavigationLink(value: pokemon) {
-                            PokedexListCellView(pokemon)
-                        }
-                        Divider()
+                List(model.pokemon, id: \.uuid) { pokemon in
+                    NavigationLink(value: pokemon) {
+                        PokedexListCellView(pokemon)
                     }
                 }
                 .frame(maxWidth: .infinity)

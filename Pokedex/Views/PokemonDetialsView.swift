@@ -23,6 +23,7 @@ struct PokemonDetialsView: View {
             pokemonNameLabel
             typeRow
             physicalInfoRow
+            statsGrid
             Spacer()
         }
     }
@@ -70,6 +71,34 @@ struct PokemonDetialsView: View {
         }
     }
     
+    private var statsGrid: some View {
+        Grid {
+            GridRow {
+                Text("HP: \(hpValue)")
+            }
+            
+            GridRow {
+                Text("Attack: \(attackValue)")
+            }
+            
+            GridRow {
+                Text("Defense: \(defenseValue)")
+            }
+            
+            GridRow {
+                Text("Special Attack: \(spAttackValue)")
+            }
+            
+            GridRow {
+                Text("Special Defense: \(spDefenseValue)")
+            }
+            
+            GridRow {
+                Text("Speed: \(speedValue)")
+            }
+        }
+    }
+    
     // MARK: - Computed Vars
     
     private var imageURL: URL? {
@@ -78,6 +107,30 @@ struct PokemonDetialsView: View {
     
     private var pokemonNameString: String {
         "#\(pokemon.id). \(pokemon.name.properCase)"
+    }
+    
+    private var hpValue: Int {
+        pokemon.getStat(.hp).value
+    }
+    
+    private var attackValue: Int {
+        pokemon.getStat(.attack).value
+    }
+    
+    private var defenseValue: Int {
+        pokemon.getStat(.defense).value
+    }
+    
+    private var spAttackValue: Int {
+        pokemon.getStat(.spAttack).value
+    }
+    
+    private var spDefenseValue: Int {
+        pokemon.getStat(.spDefense).value
+    }
+    
+    private var speedValue: Int {
+        pokemon.getStat(.speed).value
     }
     
     // MARK: - Helper Methods
