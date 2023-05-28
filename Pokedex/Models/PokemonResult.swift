@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import GRDB
 
-struct PokemonResult: Codable, Hashable, FetchableRecord {
+struct PokemonResult: Codable, Hashable {
     let uuid = UUID()
     let id: Int
     let name: String
