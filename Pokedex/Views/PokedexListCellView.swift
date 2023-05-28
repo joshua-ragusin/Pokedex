@@ -18,29 +18,29 @@ struct PokedexListCellView: View {
     }
     
     var body: some View {
-        HStack {
-            icon
+//        HStack {
+//            icon
             VStack(alignment: .leading) {
                 idLabel
                 nameLabel
                 typeRow
             }
-        }
+//        }
     }
     
     // MARK: - Computed Views
     
     // TODO: Make icons look better (they're too small rn)
-    private var icon: some View {
-        AsyncImage(url: imageURL) { image in
-            image
-                .resizable()
-                .scaledToFill()
-        } placeholder: {
-            ProgressView()
-        }
-        .frame(width: 75, height: 100)
-    }
+//    private var icon: some View {
+//        AsyncImage(url: imageURL) { image in
+//            image
+//                .resizable()
+//                .scaledToFill()
+//        } placeholder: {
+//            ProgressView()
+//        }
+//        .frame(width: 75, height: 100)
+//    }
     
     private var idLabel: some View {
         Text("#\(pokemon.id)")

@@ -110,27 +110,28 @@ struct PokemonDetialsView: View {
     }
     
     private var hpValue: Int {
-        pokemon.getStat(.hp).value
+        pokemon.pokemonStats?.hp ?? 0
     }
     
     private var attackValue: Int {
-        pokemon.getStat(.attack).value
+        pokemon.pokemonStats?.attack ?? 0
+        
     }
     
     private var defenseValue: Int {
-        pokemon.getStat(.defense).value
+        pokemon.pokemonStats?.defense ?? 0
     }
     
     private var spAttackValue: Int {
-        pokemon.getStat(.spAttack).value
+        pokemon.pokemonStats?.spAttack ?? 0
     }
     
     private var spDefenseValue: Int {
-        pokemon.getStat(.spDefense).value
+        pokemon.pokemonStats?.spDefense ?? 0
     }
     
     private var speedValue: Int {
-        pokemon.getStat(.speed).value
+        pokemon.pokemonStats?.speed ?? 0
     }
     
     // MARK: - Helper Methods
