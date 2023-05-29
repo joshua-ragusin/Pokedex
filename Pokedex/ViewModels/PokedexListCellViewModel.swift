@@ -19,7 +19,7 @@ class PokedexListCellViewModel: ObservableObject {
     }
     
     func fetchImageData() async {
-        if let pokemonImage = await pokemonImageStore.pokemonImage(pokemon.id) {
+        if let pokemonImage = pokemonImageStore.pokemonImage(pokemon.id) {
             DispatchQueue.main.async {
                 self.imageData = pokemonImage.imageData
             }
