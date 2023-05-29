@@ -9,12 +9,12 @@ import SwiftUI
 
 struct PokemonDetialsView: View {
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var model: PokemonDetailViewModel
     
-    private let pokemon: PokemonResult
     private let screen = UIScreen.main.bounds
     
     init(_ pokemon: PokemonResult) {
-        self.pokemon = pokemon
+        _model = StateObject(wrappedValue: PokemonDetailViewModel(pokemon))
     }
     
     var body: some View {
@@ -25,6 +25,9 @@ struct PokemonDetialsView: View {
             physicalInfoRow
             statsGrid
             Spacer()
+        }
+        .task(priority: .background) {
+            await model.loadStats()
         }
     }
     
@@ -54,18 +57,18 @@ struct PokemonDetialsView: View {
     }
     
     private var heightLabel: some View {
-        Text("Height: \(pokemon.height)")
+        Text("Height: \(model.pokemon.height)")
     }
     
     private var weightLabel: some View {
-        Text("Weight: \(pokemon.weight)")
+        Text("Weight: \(model.pokemon.weight)")
     }
     
     private var typeRow: some View {
         HStack {
-            typeLabel(for: pokemon.primaryTypeEnum)
+            typeLabel(for: model.pokemon.primaryTypeEnum)
             
-            if let secondaryType = pokemon.secondaryTypeEnum {
+            if let secondaryType = model.pokemon.secondaryTypeEnum {
                 typeLabel(for: secondaryType)
             }
         }
@@ -74,27 +77,27 @@ struct PokemonDetialsView: View {
     private var statsGrid: some View {
         Grid {
             GridRow {
-                Text("HP: \(hpValue)")
+                Text("HP: \(model.hp)")
             }
             
             GridRow {
-                Text("Attack: \(attackValue)")
+                Text("Attack: \(model.attack)")
             }
             
             GridRow {
-                Text("Defense: \(defenseValue)")
+                Text("Defense: \(model.defense)")
             }
             
             GridRow {
-                Text("Special Attack: \(spAttackValue)")
+                Text("Special Attack: \(model.spAttack)")
             }
             
             GridRow {
-                Text("Special Defense: \(spDefenseValue)")
+                Text("Special Defense: \(model.spDefense)")
             }
             
             GridRow {
-                Text("Speed: \(speedValue)")
+                Text("Speed: \(model.speed)")
             }
         }
     }
@@ -102,36 +105,11 @@ struct PokemonDetialsView: View {
     // MARK: - Computed Vars
     
     private var imageURL: URL? {
-        URL(string: pokemon.imageString)
+        URL(string: model.pokemon.imageString)
     }
     
     private var pokemonNameString: String {
-        "#\(pokemon.id). \(pokemon.name.properCase)"
-    }
-    
-    private var hpValue: Int {
-        pokemon.pokemonStats?.hp ?? 0
-    }
-    
-    private var attackValue: Int {
-        pokemon.pokemonStats?.attack ?? 0
-        
-    }
-    
-    private var defenseValue: Int {
-        pokemon.pokemonStats?.defense ?? 0
-    }
-    
-    private var spAttackValue: Int {
-        pokemon.pokemonStats?.spAttack ?? 0
-    }
-    
-    private var spDefenseValue: Int {
-        pokemon.pokemonStats?.spDefense ?? 0
-    }
-    
-    private var speedValue: Int {
-        pokemon.pokemonStats?.speed ?? 0
+        "#\(model.pokemon.id). \(model.pokemon.name.properCase)"
     }
     
     // MARK: - Helper Methods

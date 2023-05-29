@@ -8,47 +8,45 @@
 import SwiftUI
 
 struct PokedexListCellView: View {
+    @StateObject private var model: PokedexListCellViewModel
     @State private var showPokemonDetails = false
     
-    private let pokemon: PokemonResult
     private let screen = UIScreen.main.bounds
     
     init(_ pokemon: PokemonResult) {
-        self.pokemon = pokemon
+        _model = StateObject(wrappedValue: PokedexListCellViewModel(pokemon))
     }
     
     var body: some View {
-//        HStack {
-//            icon
+        HStack {
+            icon
             VStack(alignment: .leading) {
                 idLabel
                 nameLabel
                 typeRow
             }
-//        }
+        }
+        .task {
+            await model.fetchImageData()
+        }
     }
     
     // MARK: - Computed Views
     
     // TODO: Make icons look better (they're too small rn)
-//    private var icon: some View {
-//        AsyncImage(url: imageURL) { image in
-//            image
-//                .resizable()
-//                .scaledToFill()
-//        } placeholder: {
-//            ProgressView()
-//        }
-//        .frame(width: 75, height: 100)
-//    }
+    private var icon: some View {
+        pokemonImage
+            .scaledToFit()
+            .frame(width: 75, height: 100)
+    }
     
     private var idLabel: some View {
-        Text("#\(pokemon.id)")
+        Text("#\(model.pokemon.id)")
             .foregroundColor(.black)
     }
     
     private var nameLabel: some View {
-        Text(pokemon.name.properCase)
+        Text(model.pokemon.name.properCase)
             .foregroundColor(.black)
             .font(.title)
             .fontWeight(.medium)
@@ -56,21 +54,31 @@ struct PokedexListCellView: View {
     
     private var typeRow: some View {
         HStack {
-            typeLabel(for: pokemon.primaryTypeEnum)
+            typeLabel(for: model.pokemon.primaryTypeEnum)
             
-            if let secondaryType = pokemon.secondaryTypeEnum {
+            if let secondaryType = model.pokemon.secondaryTypeEnum {
                 typeLabel(for: secondaryType)
             } else {
                 Spacer()
             }
         }
-        
+    }
+    
+    private var pokemonImage: Image {
+        if let data = model.imageData,
+           let image = Image(data: data) {
+            return image
+                .resizable()
+        } else {
+            return Image(systemName: "nosign")
+                .resizable()
+        }
     }
     
     // MARK: - Computed Vars
     
     private var imageURL: URL? {
-        URL(string: pokemon.imageString)
+        URL(string: model.pokemon.imageString)
     }
     
     // MARK: - Helper Methods

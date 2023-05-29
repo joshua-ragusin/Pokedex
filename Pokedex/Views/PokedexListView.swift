@@ -18,7 +18,7 @@ struct PokedexListView: View {
         // TODO: Fix issue where navigating away from app causes list to repeat
         NavigationView {
             NavigationStack {
-                List(model.pokemon, id: \.id) { pokemon in
+                List(model.pokemonList, id: \.id) { pokemon in
                     NavigationLink(value: pokemon) {
                         PokedexListCellView(pokemon)
                     }
@@ -33,7 +33,11 @@ struct PokedexListView: View {
             }
         }
         .task(priority: .background) {
-            await model.loadPokemon()
+            await model.loadPokemonList {
+                await model.load() { id in
+                    model.loadPokemonFromDB(id: id)
+                }
+            }
         }
     }
 }

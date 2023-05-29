@@ -9,25 +9,43 @@ import Foundation
 import GRDB
 
 protocol PokemonStore {
-    func pokemon(id: Int) async -> PokemonResult?
-    func savePokemon(_ pokemon: PokemonResult) async throws
+    func allPokemon() -> [PokemonResult]?
+    func pokemon(id: Int) -> PokemonResult?
+    func pokemon(name: String) -> PokemonResult?
+    func savePokemon(_ pokemon: PokemonResult) throws
 }
 
 class LivePokemonStore: PokemonStore {
-    internal var queue: DatabaseQueue {
+    var queue: DatabaseQueue {
         DatabaseManager.dbQueue
     }
     
-    func pokemon(id: Int) async -> PokemonResult? {
-        try? await queue.read { db in
+    func allPokemon() -> [PokemonResult]? {
+        try? queue.read { db in
             try PokemonResult
-                .filter(PokemonResult.Column.id == id)
+                .fetchAll(db)
+        }
+    }
+    
+    func pokemon(id: Int) -> PokemonResult? {
+        try? queue.read { db in
+            try PokemonResult.fetchOne(db, sql: """
+                SELECT * FROM pokemon
+                WHERE id = ?
+                """, arguments: [id])
+        }
+    }
+    
+    func pokemon(name: String) -> PokemonResult? {
+        try? queue.read { db in
+            try PokemonResult
+                .filter(PokemonResult.Column.name == name)
                 .fetchOne(db)
         }
     }
     
-    func savePokemon(_ pokemon: PokemonResult) async throws {
-        try await queue.write { db in
+    func savePokemon(_ pokemon: PokemonResult) throws {
+        try queue.write { db in
             try db.execute(sql:
                 """
                 INSERT OR REPLACE INTO pokemon (id, name, primaryType, secondaryType, height, weight, imageString)

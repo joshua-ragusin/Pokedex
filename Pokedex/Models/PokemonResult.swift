@@ -132,4 +132,14 @@ extension PokemonResult: TableRecord, FetchableRecord, PersistableRecord {
     enum Column: String, SQLSpecificExpressible {
         case id, name, primaryType, secondaryType, height, weight, imageString
     }
+    
+    init(row: Row) throws {
+        id = row[Column.id.rawValue]
+        name = row[Column.name.rawValue]
+        primaryType = row[Column.primaryType.rawValue]
+        secondaryType = row[Column.secondaryType.rawValue]
+        height = row[Column.height.rawValue]
+        weight = row[Column.weight.rawValue]
+        imageString = row[Column.imageString.rawValue]
+    }
 }

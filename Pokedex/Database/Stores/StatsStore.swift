@@ -20,9 +20,10 @@ class LiveStatsStore: StatsStore {
     
     func stats(_ id: Int) -> Stats? {
         try? queue.read { db in
-            try Stats
-                .filter(Stats.Columns.id == id)
-                .fetchOne(db)
+            try Stats.fetchOne(db, sql: """
+                SELECT * FROM stats
+                WHERE id = ?
+                """, arguments: [id])
         }
     }
     

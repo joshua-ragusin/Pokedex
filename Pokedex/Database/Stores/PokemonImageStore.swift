@@ -20,9 +20,10 @@ class LivePokemonImageStore: PokemonImageStore {
     
     func pokemonImage(_ id: Int) -> PokemonImage? {
         try? queue.read { db in
-            try PokemonImage
-                .filter(PokemonImage.Columns.id == id)
-                .fetchOne(db)
+            try PokemonImage.fetchOne(db, sql: """
+                SELECT * FROM pokemonImage
+                WHERE id = ?
+                """, arguments: [id])
         }
     }
     
