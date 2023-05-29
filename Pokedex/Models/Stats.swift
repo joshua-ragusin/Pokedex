@@ -20,6 +20,7 @@ struct Stats: Hashable, Codable {
 
 extension Stats: TableRecord, FetchableRecord, PersistableRecord {
     static var databaseTableName = "stats"
+    static let MAX_STAT_VALUE = 255.0
     
     enum Columns: String, SQLSpecificExpressible {
         case id, hp, attack, defense, spAttack, spDefense, speed

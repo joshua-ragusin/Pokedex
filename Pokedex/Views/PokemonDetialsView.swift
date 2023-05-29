@@ -12,6 +12,7 @@ struct PokemonDetialsView: View {
     @StateObject private var model: PokemonDetailViewModel
     
     private let screen = UIScreen.main.bounds
+    private let statGridColumns = [GridItem(.fixed(75)), GridItem(.fixed(35)), GridItem()]
     
     init(_ pokemon: PokemonResult) {
         _model = StateObject(wrappedValue: PokemonDetailViewModel(pokemon))
@@ -23,7 +24,7 @@ struct PokemonDetialsView: View {
             pokemonNameLabel
             typeRow
             physicalInfoRow
-            statsGrid
+            statsSection
             Spacer()
         }
         .task(priority: .background) {
@@ -74,31 +75,73 @@ struct PokemonDetialsView: View {
         }
     }
     
-    private var statsGrid: some View {
-        Grid {
-            GridRow {
-                Text("HP: \(model.hp)")
-            }
-            
-            GridRow {
-                Text("Attack: \(model.attack)")
-            }
-            
-            GridRow {
-                Text("Defense: \(model.defense)")
-            }
-            
-            GridRow {
-                Text("Special Attack: \(model.spAttack)")
-            }
-            
-            GridRow {
-                Text("Special Defense: \(model.spDefense)")
-            }
-            
-            GridRow {
-                Text("Speed: \(model.speed)")
-            }
+    private var statsSection: some View {
+        VStack(alignment: .leading) {
+            Text("Stats")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.leading)
+            hpRow
+            attackRow
+            defenseRow
+            spAttackRow
+            spDefenseRow
+            speedRow
+        }
+    }
+    
+    // TODO: This can just be 1 function ...
+    private var hpRow: some View {
+        LazyVGrid(columns: statGridColumns) {
+            Text("HP")
+            Text("\(model.hp)")
+            statBar(amount: Double(model.hp), barColor: .blue)
+                .frame(height: 25)
+        }
+    }
+    
+    private var attackRow: some View {
+        LazyVGrid(columns: statGridColumns) {
+            Text("ATK")
+            Text("\(model.attack)")
+            statBar(amount: Double(model.attack), barColor: .blue)
+                .frame(height: 25)
+        }
+    }
+    
+    private var defenseRow: some View {
+        LazyVGrid(columns: statGridColumns) {
+            Text("DEF")
+            Text("\(model.defense)")
+            statBar(amount: Double(model.defense), barColor: .blue)
+                .frame(height: 25)
+        }
+    }
+    
+    private var spAttackRow: some View {
+        LazyVGrid(columns: statGridColumns) {
+            Text("SpATK")
+            Text("\(model.spAttack)")
+            statBar(amount: Double(model.spAttack), barColor: .blue)
+                .frame(height: 25)
+        }
+    }
+    
+    private var spDefenseRow: some View {
+        LazyVGrid(columns: statGridColumns) {
+            Text("SpDEF")
+            Text("\(model.spDefense)")
+            statBar(amount: Double(model.spDefense), barColor: .blue)
+                .frame(maxHeight: 25)
+        }
+    }
+    
+    private var speedRow: some View {
+        LazyVGrid(columns: statGridColumns) {
+            Text("SPE")
+            Text("\(model.speed)")
+            statBar(amount: Double(model.speed), barColor: .blue)
+                .frame(height: 25)
         }
     }
     
@@ -122,6 +165,20 @@ struct PokemonDetialsView: View {
             Text(type.rawValue.properCase)
                 .foregroundColor(.white)
                 .fontWeight(.bold)
+        }
+    }
+    
+    private func statBar(amount: Double, barColor: Color) -> some View {
+        let fractionCompleted = amount / Stats.MAX_STAT_VALUE
+        return GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle().frame(width: geometry.size.width, height: geometry.size.height)
+                    .opacity(0.3)
+                    .foregroundColor(.gray)
+                Rectangle().frame(width: fractionCompleted * geometry.size.width, height: geometry.size.height)
+                    .foregroundColor(barColor)
+            }
+            .cornerRadius(45.0)
         }
     }
 }
