@@ -8,9 +8,11 @@
 import Foundation
 
 class PokemonDetailViewModel: ObservableObject {
-    @Published var pokemonStats: Stats? = nil
+    @Published var pokemonStats: Stats?
+    @Published var flavorText: String?
 
-    private var statsStore = LiveStatsStore()
+    private let statsStore = LiveStatsStore()
+    private let flavorTextAPI = LivePokedexFlavorTextAPI()
     
     let pokemon: PokemonResult
     
@@ -18,14 +20,21 @@ class PokemonDetailViewModel: ObservableObject {
         self.pokemon = pokemon
     }
     
-    func loadStats() async {
-        if let stats = await statsStore.stats(pokemon.id) {
+    func loadStats() {
+        if let stats = statsStore.stats(pokemon.id) {
             DispatchQueue.main.async {
                 self.pokemonStats = stats
             }
         }
     }
     
+    func loadFlavorText() async {
+        if let flavorText = try? await flavorTextAPI.getFlavorText(for: pokemon.name) {
+            DispatchQueue.main.async {
+                self.flavorText = flavorText.flavorText
+            }
+        }
+    }
     
     // MARK: - Computed Vars
     

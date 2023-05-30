@@ -51,7 +51,6 @@ struct PokemonResult: Hashable {
             return nil
         }
     }
-    
     // MARK: - Functions
     
     // For hashable

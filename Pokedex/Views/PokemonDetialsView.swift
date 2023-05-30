@@ -29,7 +29,8 @@ struct PokemonDetialsView: View {
         }
         .padding(.leading)
         .task(priority: .background) {
-            await model.loadStats()
+            model.loadStats()
+            await model.loadFlavorText()
         }
     }
     
