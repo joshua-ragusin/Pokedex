@@ -19,14 +19,15 @@ struct PokemonDetialsView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center) {
-            pokemonImage
+        pokemonImage
+        VStack(alignment: .leading) {
             pokemonNameLabel
             typeRow
             physicalInfoRow
             statsSection
             Spacer()
         }
+        .padding(.leading)
         .task(priority: .background) {
             await model.loadStats()
         }
@@ -35,8 +36,14 @@ struct PokemonDetialsView: View {
     // MARK: - Computed Views
     
     private var pokemonNameLabel: some View {
-        Text(pokemonNameString)
-            .font(.title)
+        VStack(alignment: .leading) {
+            Text("#\(model.pokemon.id)")
+                .font(.callout)
+                .foregroundColor(.gray)
+            Text(model.pokemon.name.properCase)
+                .font(.title)
+                .fontWeight(.bold)
+        }
     }
     
     private var pokemonImage: some View {
@@ -149,10 +156,6 @@ struct PokemonDetialsView: View {
     
     private var imageURL: URL? {
         URL(string: model.pokemon.imageString)
-    }
-    
-    private var pokemonNameString: String {
-        "#\(model.pokemon.id). \(model.pokemon.name.properCase)"
     }
     
     // MARK: - Helper Methods

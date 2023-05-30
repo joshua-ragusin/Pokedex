@@ -21,8 +21,8 @@ struct PokedexListCellView: View {
         HStack {
             icon
             VStack(alignment: .leading) {
-                idLabel
                 nameLabel
+                idLabel
                 typeRow
             }
         }
