@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270682732A2B21F000CECAF9 /* FlavorTextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270682722A2B21F000CECAF9 /* FlavorTextStore.swift */; };
 		2731966E2A23155900463693 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2731966D2A23155900463693 /* DatabaseManager.swift */; };
 		273196712A2317E000463693 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273196702A2317E000463693 /* AppDelegate.swift */; };
 		27AA1C362A22625A00944F37 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA1C352A22625A00944F37 /* Color.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		270682722A2B21F000CECAF9 /* FlavorTextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlavorTextStore.swift; sourceTree = "<group>"; };
 		2731966D2A23155900463693 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		273196702A2317E000463693 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27AA1C352A22625A00944F37 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				27F36B252A23A6B8005710F3 /* PokemonStore.swift */,
 				27F36B292A23C07C005710F3 /* PokemonImageStore.swift */,
 				27F36B2D2A23C5A4005710F3 /* StatsStore.swift */,
+				270682722A2B21F000CECAF9 /* FlavorTextStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				27AA1C382A228F6800944F37 /* PokemonDetialsView.swift in Sources */,
 				27FE53BB2A21AC5400378DF4 /* PokedexListCellView.swift in Sources */,
 				27F36B322A240CAF005710F3 /* PokedexListCellViewModel.swift in Sources */,
+				270682732A2B21F000CECAF9 /* FlavorTextStore.swift in Sources */,
 				27F36B2E2A23C5A4005710F3 /* StatsStore.swift in Sources */,
 				27F36B212A23A4B2005710F3 /* PokemonType.swift in Sources */,
 				27FE53AC2A21973A00378DF4 /* PokemonResult.swift in Sources */,

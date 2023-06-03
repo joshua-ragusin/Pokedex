@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GRDB
 
 struct PokemonFlavorText: Codable {
     let name: String
@@ -16,16 +17,38 @@ struct PokemonFlavorText: Codable {
         case flavorText = "flavor_text_entries"
     }
     
-    enum FlavorTextContainerKeys: String, CodingKey {
+    enum FlavorTextKeys: String, CodingKey {
         case text = "flavor_text"
     }
     
-    // TODO: Fix decoder for this class (flavorText not being decoded properly)
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let flavorTexts = try container.decode([FlavorTextContainer].self, forKey: .flavorText)
         name = try container.decode(String.self, forKey: .name)
-        let flavorTextContainers = try container.nestedContainer(keyedBy: FlavorTextContainerKeys.self, forKey: .flavorText)
-        
-        flavorText = try flavorTextContainers.decode(String.self, forKey: .text)
+    
+        flavorText = flavorTexts.first { $0.language.name == "en" }?.flavor_text ?? ""
     }
+}
+
+extension PokemonFlavorText: TableRecord, FetchableRecord, PersistableRecord {
+    static var databaseTableName = "flavorText"
+    
+    enum Column: String, SQLSpecificExpressible {
+        case name, flavorText
+    }
+    
+    init(row: Row) throws {
+        name = row[Column.name.rawValue]
+        flavorText = row[Column.flavorText.rawValue]
+    }
+}
+
+struct FlavorTextContainer: Codable {
+    let flavor_text: String
+    let language: Language
+}
+
+struct Language: Codable {
+    let name: String
+    let url: String
 }

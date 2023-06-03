@@ -64,6 +64,15 @@ class DatabaseManager {
             }
         }
         
+        migrator.registerMigration("03Migration-Create-Flavor-Text-Table") { db in
+            try db.create(table: "flavorText") { t in
+                t.column("id", .integer)
+                    .primaryKey(autoincrement: true)
+                t.column("name", .text).notNull()
+                t.column("text", .blob).notNull()
+            }
+        }
+        
         try? migrator.migrate(dbQueue)
     }
 }

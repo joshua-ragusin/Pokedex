@@ -13,6 +13,7 @@ class PokemonDetailViewModel: ObservableObject {
 
     private let statsStore = LiveStatsStore()
     private let flavorTextAPI = LivePokedexFlavorTextAPI()
+    private let flavorTextStore = LiveFlavorTextStore()
     
     let pokemon: PokemonResult
     
@@ -28,11 +29,21 @@ class PokemonDetailViewModel: ObservableObject {
         }
     }
     
-    func loadFlavorText() async {
+    func loadFlavorText(completion: @escaping (PokemonFlavorText) -> Void) async {
         if let flavorText = try? await flavorTextAPI.getFlavorText(for: pokemon.name) {
             DispatchQueue.main.async {
                 self.flavorText = flavorText.flavorText
             }
+            
+            completion(flavorText)
+        }
+    }
+    
+    func saveFlavorText(_ text: PokemonFlavorText) {
+        do {
+            try flavorTextStore.saveFlavorText(text)
+        } catch {
+            print(error)
         }
     }
     

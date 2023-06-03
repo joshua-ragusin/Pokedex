@@ -19,18 +19,23 @@ struct PokemonDetialsView: View {
     }
     
     var body: some View {
-        pokemonImage
-        VStack(alignment: .leading) {
-            pokemonNameLabel
-            typeRow
-            physicalInfoRow
-            statsSection
-            Spacer()
-        }
-        .padding(.leading)
-        .task(priority: .background) {
-            model.loadStats()
-            await model.loadFlavorText()
+        ScrollView {
+            pokemonImage
+            VStack(alignment: .leading) {
+                pokemonNameLabel
+                flavorTextLabel
+                typeRow
+                physicalInfoRow
+                statsSection
+                Spacer()
+            }
+            .padding(.leading)
+            .task(priority: .background) {
+                model.loadStats()
+                await model.loadFlavorText { text in
+                    model.saveFlavorText(text)
+                }
+            }
         }
     }
     
@@ -45,6 +50,12 @@ struct PokemonDetialsView: View {
                 .font(.title)
                 .fontWeight(.bold)
         }
+    }
+    
+    private var flavorTextLabel: some View {
+        // TODO: Flavor text works. Now work on styling
+        Text(model.flavorText ?? "")
+            .fixedSize(horizontal: false, vertical: true)
     }
     
     private var pokemonImage: some View {
