@@ -239,7 +239,6 @@
 			children = (
 				27FE53792A2195EF00378DF4 /* Pokedex */,
 				27FE538A2A2195EF00378DF4 /* PokedexTests */,
-				27FE53942A2195EF00378DF4 /* PokedexUITests */,
 				27FE53782A2195EF00378DF4 /* Products */,
 				273196752A2324A400463693 /* Frameworks */,
 			);
@@ -282,6 +281,7 @@
 		27FE538A2A2195EF00378DF4 /* PokedexTests */ = {
 			isa = PBXGroup;
 			children = (
+				27FE53942A2195EF00378DF4 /* PokedexUITests */,
 				27FE538B2A2195EF00378DF4 /* PokedexTests.swift */,
 			);
 			path = PokedexTests;

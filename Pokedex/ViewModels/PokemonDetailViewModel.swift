@@ -21,6 +21,33 @@ class PokemonDetailViewModel: ObservableObject {
         self.pokemon = pokemon
     }
     
+    var typeImmunities: [PokemonTypes] {
+        let immunities = pokemon.primaryTypeEnum.getDefensiveImmunities() + (pokemon.secondaryTypeEnum?.getDefensiveImmunities() ?? [PokemonTypes]())
+        
+        return Array(Set(immunities))
+    }
+    
+    var typeDoubleWeaknesses: [PokemonTypes] {
+        let typeWeaknesses = pokemon.primaryTypeEnum.getDefensiveWeaknesses() + (pokemon.secondaryTypeEnum?.getDefensiveWeaknesses() ?? [PokemonTypes]())
+        var weaknessSet = Set<PokemonTypes>()
+            
+        for pokemonType in typeWeaknesses {
+            if !weaknessSet.contains(pokemonType) {
+                weaknessSet.insert(pokemonType)
+            }
+        }
+        
+        return Array(weaknessSet)
+    }
+    
+    var typeQuadrupleWeaknesses: [PokemonTypes] {
+        let typeWeaknesses = pokemon.primaryTypeEnum.getDefensiveWeaknesses() + (pokemon.secondaryTypeEnum?.getDefensiveWeaknesses() ?? [PokemonTypes]())
+        var weaknessSet = Set<PokemonTypes>()
+        
+        return typeWeaknesses.filter { !weaknessSet.insert($0).inserted }
+        
+    }
+    
     func loadStats() {
         if let stats = statsStore.stats(pokemon.id) {
             DispatchQueue.main.async {

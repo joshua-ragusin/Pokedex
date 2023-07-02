@@ -27,14 +27,14 @@ struct PokemonDetialsView: View {
                 typeRow
                 physicalInfoRow
                 statsSection
-                Spacer()
             }
-            .padding(.leading)
-            .task(priority: .background) {
-                model.loadStats()
-                await model.loadFlavorText { text in
-                    model.saveFlavorText(text)
-                }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.leading)
+        .task(priority: .background) {
+            model.loadStats()
+            await model.loadFlavorText { text in
+                model.saveFlavorText(text)
             }
         }
     }
@@ -42,7 +42,7 @@ struct PokemonDetialsView: View {
     // MARK: - Computed Views
     
     private var pokemonNameLabel: some View {
-        VStack(alignment: .leading) {
+        VStack {
             Text("#\(model.pokemon.id)")
                 .font(.callout)
                 .foregroundColor(.gray)
@@ -53,8 +53,9 @@ struct PokemonDetialsView: View {
     }
     
     private var flavorTextLabel: some View {
-        // TODO: Flavor text works. Now work on styling
+        // TODO: Flavor text isn't expanding horizontally. Possible due to ScrollView (?)
         Text(model.flavorText ?? "")
+            .foregroundColor(.gray)
             .fixedSize(horizontal: false, vertical: true)
     }
     
@@ -111,57 +112,27 @@ struct PokemonDetialsView: View {
     
     // TODO: This can just be 1 function ...
     private var hpRow: some View {
-        LazyVGrid(columns: statGridColumns) {
-            Text("HP")
-            Text("\(model.hp)")
-            statBar(amount: Double(model.hp), barColor: .blue)
-                .frame(height: 25)
-        }
+        statRow("HP", amount: model.hp)
     }
     
     private var attackRow: some View {
-        LazyVGrid(columns: statGridColumns) {
-            Text("ATK")
-            Text("\(model.attack)")
-            statBar(amount: Double(model.attack), barColor: .blue)
-                .frame(height: 25)
-        }
+        statRow("ATK", amount: model.attack)
     }
     
     private var defenseRow: some View {
-        LazyVGrid(columns: statGridColumns) {
-            Text("DEF")
-            Text("\(model.defense)")
-            statBar(amount: Double(model.defense), barColor: .blue)
-                .frame(height: 25)
-        }
+        statRow("DEF", amount: model.defense)
     }
     
     private var spAttackRow: some View {
-        LazyVGrid(columns: statGridColumns) {
-            Text("SpATK")
-            Text("\(model.spAttack)")
-            statBar(amount: Double(model.spAttack), barColor: .blue)
-                .frame(height: 25)
-        }
+        statRow("SpATK", amount: model.spAttack)
     }
     
     private var spDefenseRow: some View {
-        LazyVGrid(columns: statGridColumns) {
-            Text("SpDEF")
-            Text("\(model.spDefense)")
-            statBar(amount: Double(model.spDefense), barColor: .blue)
-                .frame(maxHeight: 25)
-        }
+        statRow("SpDEF", amount: model.spDefense)
     }
     
     private var speedRow: some View {
-        LazyVGrid(columns: statGridColumns) {
-            Text("SPE")
-            Text("\(model.speed)")
-            statBar(amount: Double(model.speed), barColor: .blue)
-                .frame(height: 25)
-        }
+        statRow("SPE", amount: model.speed)
     }
     
     // MARK: - Computed Vars
@@ -171,6 +142,16 @@ struct PokemonDetialsView: View {
     }
     
     // MARK: - Helper Methods
+    
+    private func statRow(_ type: String, amount: Int) -> some View {
+        LazyVGrid(columns: statGridColumns) {
+            Text(type)
+            Text("\(amount)")
+            statBar(amount: Double(amount), barColor: .blue)
+                .frame(height: 25)
+        }
+    }
+    
     private func typeLabel(for type: PokemonTypes) -> some View {
         ZStack {
             Rectangle()
