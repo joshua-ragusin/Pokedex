@@ -54,10 +54,10 @@ struct PokedexListCellView: View {
     
     private var typeRow: some View {
         HStack {
-            typeLabel(for: model.pokemon.primaryTypeEnum)
+            typeLabel(for: model.pokemon.primaryType)
                 .frame(maxWidth: 75, maxHeight: 25)
             
-            if let secondaryType = model.pokemon.secondaryTypeEnum {
+            if let secondaryType = model.pokemon.secondaryType {
                 typeLabel(for: secondaryType)
                     .frame(maxWidth: 75, maxHeight: 25)
             } else {

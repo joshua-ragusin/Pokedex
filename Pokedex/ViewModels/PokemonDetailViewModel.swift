@@ -51,19 +51,19 @@ class PokemonDetailViewModel: ObservableObject {
     // MARK: - Computed Vars
     
     var typeImmunities: [PokemonTypes] {
-        let immunities = pokemon.primaryTypeEnum.getDefensiveImmunities() + (pokemon.secondaryTypeEnum?.getDefensiveImmunities() ?? [PokemonTypes]())
+        let immunities = pokemon.primaryType.getDefensiveImmunities() + (pokemon.secondaryType?.getDefensiveImmunities() ?? [PokemonTypes]())
         
         return Array(Set(immunities))
     }
     
     var typeDoubleWeaknesses: [PokemonTypes] {
-        let primaryTypeWeaknesses = pokemon.primaryTypeEnum.getDefensiveWeaknesses()
-        let secondaryTypeWeaknesses = pokemon.secondaryTypeEnum?.getDefensiveWeaknesses() ?? [PokemonTypes]()
+        let primaryTypeWeaknesses = pokemon.primaryType.getDefensiveWeaknesses()
+        let secondaryTypeWeaknesses = pokemon.secondaryType?.getDefensiveWeaknesses() ?? [PokemonTypes]()
         let typeWeaknesses = (primaryTypeWeaknesses + secondaryTypeWeaknesses).filter { !primaryTypeWeaknesses.contains($0) || !secondaryTypeWeaknesses.contains($0)
         }
         var weaknessSet = Set(typeWeaknesses)
                 
-        let resistantTypes = pokemon.primaryTypeEnum.getDefensiveResistances() + (pokemon.secondaryTypeEnum?.getDefensiveResistances() ?? [PokemonTypes]())
+        let resistantTypes = pokemon.primaryType.getDefensiveResistances() + (pokemon.secondaryType?.getDefensiveResistances() ?? [PokemonTypes]())
         let resistanceSet = Set(resistantTypes)
         
         for pokemonType in resistanceSet {
@@ -76,21 +76,21 @@ class PokemonDetailViewModel: ObservableObject {
     }
     
     var typeQuadrupleWeaknesses: [PokemonTypes] {
-        let typeWeaknesses = pokemon.primaryTypeEnum.getDefensiveWeaknesses() + (pokemon.secondaryTypeEnum?.getDefensiveWeaknesses() ?? [PokemonTypes]())
+        let typeWeaknesses = pokemon.primaryType.getDefensiveWeaknesses() + (pokemon.secondaryType?.getDefensiveWeaknesses() ?? [PokemonTypes]())
         var weaknessSet = Set<PokemonTypes>()
         
         return typeWeaknesses.filter { !weaknessSet.insert($0).inserted }
     }
     
     var typeDoubleResistances: [PokemonTypes] {
-        let primaryTypeResistances = pokemon.primaryTypeEnum.getDefensiveResistances()
-        let secondaryTypeResistances = pokemon.secondaryTypeEnum?.getDefensiveResistances() ?? [PokemonTypes]()
+        let primaryTypeResistances = pokemon.primaryType.getDefensiveResistances()
+        let secondaryTypeResistances = pokemon.secondaryType?.getDefensiveResistances() ?? [PokemonTypes]()
         let typeResistances = (primaryTypeResistances + secondaryTypeResistances).filter {
             !primaryTypeResistances.contains($0) || !secondaryTypeResistances.contains($0)
         }
         var resistanceSet = Set(typeResistances)
         
-        let typeWeaknesses = pokemon.primaryTypeEnum.getDefensiveWeaknesses() + (pokemon.secondaryTypeEnum?.getDefensiveWeaknesses() ?? [PokemonTypes]())
+        let typeWeaknesses = pokemon.primaryType.getDefensiveWeaknesses() + (pokemon.secondaryType?.getDefensiveWeaknesses() ?? [PokemonTypes]())
         var weaknessSet = Set(typeWeaknesses)
         
         for pokemonType in weaknessSet {
@@ -103,7 +103,7 @@ class PokemonDetailViewModel: ObservableObject {
     }
     
     var typeQuadrupleResistances: [PokemonTypes] {
-        let typeResistances = pokemon.primaryTypeEnum.getDefensiveResistances() + (pokemon.secondaryTypeEnum?.getDefensiveResistances() ?? [PokemonTypes]())
+        let typeResistances = pokemon.primaryType.getDefensiveResistances() + (pokemon.secondaryType?.getDefensiveResistances() ?? [PokemonTypes]())
         var resistancesSet = Set<PokemonTypes>()
         
         return typeResistances.filter { !resistancesSet.insert($0).inserted }

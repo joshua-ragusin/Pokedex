@@ -50,7 +50,7 @@ class LivePokemonStore: PokemonStore {
                 """
                 INSERT OR REPLACE INTO pokemon (id, name, primaryType, secondaryType, height, weight, imageString)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
-                """, arguments: [pokemon.id, pokemon.name, pokemon.primaryType, pokemon.secondaryType, pokemon.height, pokemon.weight, pokemon.imageString])
+                """, arguments: [pokemon.id, pokemon.name, pokemon.primaryTypeString, pokemon.secondaryTypeString, pokemon.height, pokemon.weight, pokemon.imageString])
         }
     }
 }

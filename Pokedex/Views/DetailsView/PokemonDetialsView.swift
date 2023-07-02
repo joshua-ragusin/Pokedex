@@ -29,10 +29,11 @@ struct PokemonDetialsView: View {
                 pokemonNameLabel
                 flavorTextLabel
                 Divider()
-//                physicalInfoRow
                 statsSection
                 Divider()
                 typeMatchupSection
+                Divider()
+                characteristicsSection
             }
             .frame(maxWidth: .infinity)
             .padding(.leading)
@@ -75,6 +76,16 @@ struct PokemonDetialsView: View {
         .frame(maxWidth: 150, maxHeight: 300)
     }
     
+    private var characteristicsSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Characteristics")
+                .font(.headline)
+                .fontWeight(.bold)
+            heightLabel
+            weightLabel
+        }
+    }
+    
     private var typeMatchupSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Type Matchups")
@@ -95,26 +106,29 @@ struct PokemonDetialsView: View {
         }
     }
     
-    private var physicalInfoRow: some View {
+    private var heightLabel: some View {
         HStack {
-            heightLabel
-            weightLabel
+            Text("Height")
+                .foregroundColor(model.pokemon.primaryType.color)
+                .font(.subheadline)
+            Text("\(Double(model.pokemon.height) / 10, specifier: "%.1f") Meters")
         }
     }
     
-    private var heightLabel: some View {
-        Text("Height: \(model.pokemon.height)")
-    }
-    
     private var weightLabel: some View {
-        Text("Weight: \(model.pokemon.weight)")
+        HStack {
+            Text("Weight")
+                .foregroundColor(model.pokemon.primaryType.color)
+                .font(.subheadline)
+            Text("\(Double(model.pokemon.weight) / 10, specifier: "%.1f") Kilograms")
+        }
     }
     
     private var typeRow: some View {
         HStack {
-            typeLabel(for: model.pokemon.primaryTypeEnum)
+            typeLabel(for: model.pokemon.primaryType)
             
-            if let secondaryType = model.pokemon.secondaryTypeEnum {
+            if let secondaryType = model.pokemon.secondaryType {
                 typeLabel(for: secondaryType)
             }
         }

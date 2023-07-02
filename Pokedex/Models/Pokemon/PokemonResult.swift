@@ -17,8 +17,8 @@ struct PokemonResult: Hashable {
     
     let imageString: String
     
-    let primaryType: String
-    let secondaryType: String?
+    let primaryTypeString: String
+    let secondaryTypeString: String?
     
     var pokemonStats: PokemonGameStats? = nil
     var image: PokemonImage? = nil
@@ -29,23 +29,23 @@ struct PokemonResult: Hashable {
         self.height = height
         self.weight = weight
         self.imageString = imageString
-        self.primaryType = primaryType
-        self.secondaryType = secondaryType
+        self.primaryTypeString = primaryType
+        self.secondaryTypeString = secondaryType
     }
     
     // MARK: - Computed Vars
     
-    var primaryTypeEnum: PokemonTypes {
-        if let type = PokemonTypes(rawValue: primaryType) {
+    var primaryType: PokemonTypes {
+        if let type = PokemonTypes(rawValue: primaryTypeString) {
             return type
         } else {
             return .normal
         }
     }
     
-    var secondaryTypeEnum: PokemonTypes? {
-        if let secondaryType,
-           let type = PokemonTypes(rawValue: secondaryType) {
+    var secondaryType: PokemonTypes? {
+        if let secondaryTypeString,
+           let type = PokemonTypes(rawValue: secondaryTypeString) {
             return type
         } else {
             return nil
@@ -91,13 +91,13 @@ extension PokemonResult: Codable {
         
         imageString = try spriteContainer.decode(String.self, forKey: .imageString)
         
-        primaryType = types[0].type.name
+        primaryTypeString = types[0].type.name
         
         if let secondType = types.last,
-           secondType.type.name != primaryType {
-            secondaryType = secondType.type.name
+           secondType.type.name != primaryTypeString {
+            secondaryTypeString = secondType.type.name
         } else {
-            secondaryType = nil
+            secondaryTypeString = nil
         }
         
         var decodedStats = [PokemonStat]()
@@ -135,8 +135,8 @@ extension PokemonResult: TableRecord, FetchableRecord, PersistableRecord {
     init(row: Row) throws {
         id = row[Column.id.rawValue]
         name = row[Column.name.rawValue]
-        primaryType = row[Column.primaryType.rawValue]
-        secondaryType = row[Column.secondaryType.rawValue]
+        primaryTypeString = row[Column.primaryType.rawValue]
+        secondaryTypeString = row[Column.secondaryType.rawValue]
         height = row[Column.height.rawValue]
         weight = row[Column.weight.rawValue]
         imageString = row[Column.imageString.rawValue]

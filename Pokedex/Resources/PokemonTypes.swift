@@ -278,41 +278,41 @@ enum PokemonTypes: String, Identifiable {
     var color: Color {
         switch self {
         case .normal:
-            return Color.normalType
+            return .normalType
         case .fire:
-            return Color.fireType
+            return .fireType
         case .water:
-            return Color.waterType
+            return .waterType
         case .grass:
-            return Color.grassType
+            return .grassType
         case .electric:
-            return Color.electricType
+            return .electricType
         case .ice:
-            return Color.iceType
+            return .iceType
         case .fighting:
-            return Color.fightingType
+            return .fightingType
         case .poison:
-            return Color.poisonType
+            return .poisonType
         case .ground:
-            return Color.groundType
+            return .groundType
         case .flying:
-            return Color.flyingType
+            return .flyingType
         case .psychic:
-            return Color.psychicType
+            return .psychicType
         case .bug:
-            return Color.bugType
+            return .bugType
         case .rock:
-            return Color.rockType
+            return .rockType
         case .ghost:
-            return Color.ghostType
+            return .ghostType
         case .dark:
-            return Color.darkType
+            return .darkType
         case .dragon:
-            return Color.dragonType
+            return .dragonType
         case .steel:
-            return Color.steelType
+            return .steelType
         case .fairy:
-            return Color.fairyType
+            return .fairyType
         }
     }
 }
