@@ -56,7 +56,6 @@ struct PokemonDetialsView: View {
     }
     
     private var flavorTextLabel: some View {
-        // TODO: Flavor text isn't expanding horizontally. Possible due to ScrollView (?)
         Text(model.flavorText ?? "")
             .fixedSize(horizontal: false, vertical: true)
             .foregroundColor(.gray)
