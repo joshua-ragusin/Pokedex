@@ -21,6 +21,35 @@ class PokemonDetailViewModel: ObservableObject {
         self.pokemon = pokemon
     }
     
+    func loadStats() {
+        if let stats = statsStore.stats(pokemon.id) {
+            DispatchQueue.main.async {
+                self.pokemonStats = stats
+            }
+        }
+    }
+    
+    func loadFlavorText(completion: @escaping (PokemonFlavorText) -> Void) async {
+        if let pokedexEntry = try? await flavorTextAPI.getFlavorText(for: pokemon.name) {
+            DispatchQueue.main.async {
+                // TODO: This is fine for now, but I would prefer to have a way of fittering out all the "\n" characters we get from the API before storing them in the DB
+                self.flavorText = pokedexEntry.flavorText.replacingOccurrences(of: "\n", with: " ")
+            }
+            
+            completion(pokedexEntry)
+        }
+    }
+    
+    func saveFlavorText(_ text: PokemonFlavorText) {
+        do {
+            try flavorTextStore.saveFlavorText(text)
+        } catch {
+            print(error)
+        }
+    }
+    
+    // MARK: - Computed Vars
+    
     var typeImmunities: [PokemonTypes] {
         let immunities = pokemon.primaryTypeEnum.getDefensiveImmunities() + (pokemon.secondaryTypeEnum?.getDefensiveImmunities() ?? [PokemonTypes]())
         
@@ -47,34 +76,6 @@ class PokemonDetailViewModel: ObservableObject {
         return typeWeaknesses.filter { !weaknessSet.insert($0).inserted }
         
     }
-    
-    func loadStats() {
-        if let stats = statsStore.stats(pokemon.id) {
-            DispatchQueue.main.async {
-                self.pokemonStats = stats
-            }
-        }
-    }
-    
-    func loadFlavorText(completion: @escaping (PokemonFlavorText) -> Void) async {
-        if let flavorText = try? await flavorTextAPI.getFlavorText(for: pokemon.name) {
-            DispatchQueue.main.async {
-                self.flavorText = flavorText.flavorText
-            }
-            
-            completion(flavorText)
-        }
-    }
-    
-    func saveFlavorText(_ text: PokemonFlavorText) {
-        do {
-            try flavorTextStore.saveFlavorText(text)
-        } catch {
-            print(error)
-        }
-    }
-    
-    // MARK: - Computed Vars
     
     var hp: Int {
         if let stats = pokemonStats {

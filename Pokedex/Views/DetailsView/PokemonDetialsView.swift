@@ -12,25 +12,28 @@ struct PokemonDetialsView: View {
     @StateObject private var model: PokemonDetailViewModel
     
     private let screen = UIScreen.main.bounds
-    private let statGridColumns = [GridItem(.fixed(75)), GridItem(.fixed(35)), GridItem()]
+    private let statGridColumns = [GridItem(.fixed(75)),
+                                   GridItem(.fixed(35)),
+                                   GridItem()]
     
     init(_ pokemon: PokemonResult) {
         _model = StateObject(wrappedValue: PokemonDetailViewModel(pokemon))
     }
     
     var body: some View {
-        ScrollView {
+        ScrollView(.vertical) {
             pokemonImage
+            typeRow
+            
             VStack(alignment: .leading) {
                 pokemonNameLabel
                 flavorTextLabel
-                typeRow
-                physicalInfoRow
+//                physicalInfoRow
                 statsSection
             }
+            .frame(maxWidth: .infinity)
+            .padding(.leading)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.leading)
         .task(priority: .background) {
             model.loadStats()
             await model.loadFlavorText { text in
@@ -42,7 +45,7 @@ struct PokemonDetialsView: View {
     // MARK: - Computed Views
     
     private var pokemonNameLabel: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("#\(model.pokemon.id)")
                 .font(.callout)
                 .foregroundColor(.gray)
@@ -55,9 +58,9 @@ struct PokemonDetialsView: View {
     private var flavorTextLabel: some View {
         // TODO: Flavor text isn't expanding horizontally. Possible due to ScrollView (?)
         Text(model.flavorText ?? "")
-            .foregroundColor(.gray)
             .fixedSize(horizontal: false, vertical: true)
-    }
+            .foregroundColor(.gray)
+        }
     
     private var pokemonImage: some View {
         AsyncImage(url: imageURL) { image in
@@ -100,7 +103,6 @@ struct PokemonDetialsView: View {
             Text("Stats")
                 .font(.title)
                 .fontWeight(.bold)
-                .padding(.leading)
             hpRow
             attackRow
             defenseRow
@@ -143,7 +145,7 @@ struct PokemonDetialsView: View {
     // MARK: - Helper Methods
     
     private func statRow(_ type: String, amount: Int) -> some View {
-        LazyVGrid(columns: statGridColumns) {
+        LazyVGrid(columns: statGridColumns, alignment: .leading) {
             Text(type)
             Text("\(amount)")
             statBar(amount: Double(amount), barColor: .blue)
