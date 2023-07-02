@@ -8,9 +8,10 @@
 import Foundation
 import SwiftUI
 
-enum PokemonTypes: String {
+enum PokemonTypes: String, Identifiable {
     case normal, fire, water, grass, electric, ice, fighting, poison, ground, flying, psychic, bug, rock, ghost, dark, dragon, steel, fairy
     
+    var id: Self { self }
     
     // MARK: - Defensive Type helper methods
     
@@ -68,7 +69,7 @@ enum PokemonTypes: String {
         case .water:
             return [.fire, .water, .ice, .steel]
         case .grass:
-            return [.water, .electric, .water, .ground]
+            return [.water, .electric, .grass, .ground]
         case .electric:
             return [.electric, .flying, .steel]
         case .ice:

@@ -55,9 +55,11 @@ struct PokedexListCellView: View {
     private var typeRow: some View {
         HStack {
             typeLabel(for: model.pokemon.primaryTypeEnum)
+                .frame(maxWidth: 75, maxHeight: 25)
             
             if let secondaryType = model.pokemon.secondaryTypeEnum {
                 typeLabel(for: secondaryType)
+                    .frame(maxWidth: 75, maxHeight: 25)
             } else {
                 Spacer()
             }
@@ -87,7 +89,6 @@ struct PokedexListCellView: View {
             Rectangle()
                 .cornerRadius(10)
                 .foregroundColor(type.color)
-                .frame(maxWidth: screen.width / 4.7)
             Text(type.rawValue.properCase)
                 .foregroundColor(.white)
                 .fontWeight(.bold)

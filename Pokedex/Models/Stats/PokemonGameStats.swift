@@ -8,7 +8,7 @@
 import Foundation
 import GRDB
 
-struct Stats: Hashable, Codable {
+struct PokemonGameStats: Hashable, Codable {
     let id: Int
     let hp: Int
     let attack: Int
@@ -18,7 +18,7 @@ struct Stats: Hashable, Codable {
     let speed: Int
 }
 
-extension Stats: TableRecord, FetchableRecord, PersistableRecord {
+extension PokemonGameStats: TableRecord, FetchableRecord, PersistableRecord {
     static var databaseTableName = "stats"
     static let MAX_STAT_VALUE = 255.0
     

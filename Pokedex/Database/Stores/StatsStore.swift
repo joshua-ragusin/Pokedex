@@ -9,8 +9,8 @@ import Foundation
 import GRDB
 
 protocol StatsStore {
-    func stats(_ id: Int) -> Stats?
-    func saveStat(_ stat: Stats) throws
+    func stats(_ id: Int) -> PokemonGameStats?
+    func saveStat(_ stat: PokemonGameStats) throws
 }
 
 class LiveStatsStore: StatsStore {
@@ -18,18 +18,18 @@ class LiveStatsStore: StatsStore {
         DatabaseManager.dbQueue
     }
     
-    func stats(_ id: Int) -> Stats? {
+    func stats(_ id: Int) -> PokemonGameStats? {
         try? queue.read { db in
-            try Stats.fetchOne(db, sql: """
+            try PokemonGameStats.fetchOne(db, sql: """
                 SELECT * FROM stats
                 WHERE id = ?
                 """, arguments: [id])
         }
     }
     
-    func saveStat(_ stat: Stats) throws {
+    func saveStat(_ stat: PokemonGameStats) throws {
         try queue.write { db in
-            try Stats(id: stat.id, hp: stat.hp, attack: stat.attack, defense: stat.defense, spAttack: stat.spAttack, spDefense: stat.spDefense, speed: stat.speed)
+            try PokemonGameStats(id: stat.id, hp: stat.hp, attack: stat.attack, defense: stat.defense, spAttack: stat.spAttack, spDefense: stat.spDefense, speed: stat.speed)
                 .insert(db, onConflict: .replace)
         }
     }

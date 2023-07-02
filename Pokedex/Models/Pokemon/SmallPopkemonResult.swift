@@ -1,5 +1,5 @@
 //
-//  SmallPokemonResult.swift
+//  PokemonNetworkResult.swift
 //  Pokedex
 //
 //  Created by Joshua Ragusin on 5/26/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SmallPokemonResult: Codable {
+struct PokemonNetworkResult: Codable {
     let name: String
     let url: String
 }

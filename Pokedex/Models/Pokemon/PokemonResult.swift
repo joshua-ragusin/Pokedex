@@ -20,7 +20,7 @@ struct PokemonResult: Hashable {
     let primaryType: String
     let secondaryType: String?
     
-    var pokemonStats: Stats? = nil
+    var pokemonStats: PokemonGameStats? = nil
     var image: PokemonImage? = nil
     
     init(id: Int, name: String, height: Int, weight: Int, imageString: String, primaryType: String, secondaryType: String?) {
@@ -108,7 +108,7 @@ extension PokemonResult: Codable {
         pokemonStats = decodeStats(from: decodedStats, for: id)
     }
     
-    private func decodeStats(from pokemonStats: [PokemonStat], for id: Int) -> Stats {
+    private func decodeStats(from pokemonStats: [PokemonStat], for id: Int) -> PokemonGameStats {
         let hp = pokemonStats.first { $0.name == BattleStats.hp.rawValue }
             .map { $0.value } ?? 0
         let attack = pokemonStats.first { $0.name == BattleStats.attack.rawValue }
@@ -121,7 +121,7 @@ extension PokemonResult: Codable {
             .map { $0.value } ?? 0
         let speed = pokemonStats.first { $0.name == BattleStats.speed.rawValue }
             .map { $0.value } ?? 0
-        return Stats(id: id, hp: hp, attack: attack, defense: defense, spAttack: spAttack, spDefense: spDefense, speed: speed)
+        return PokemonGameStats(id: id, hp: hp, attack: attack, defense: defense, spAttack: spAttack, spDefense: spDefense, speed: speed)
     }
 }
 

@@ -9,10 +9,10 @@ import Foundation
 
 struct PokemonTypeResult: Codable {
     let slot: Int
-    let type: PokemonType
+    let type: PokemonTypeModel
 }
 
-struct PokemonType: Codable {
+struct PokemonTypeModel: Codable {
     let name: String
     let url: String
 }

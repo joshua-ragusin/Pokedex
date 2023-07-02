@@ -9,5 +9,5 @@ import Foundation
 
 struct PokemonListResult: Codable {
     let count: Int
-    let results: [SmallPokemonResult]
+    let results: [PokemonNetworkResult]
 }

@@ -25,11 +25,14 @@ struct PokemonDetialsView: View {
             pokemonImage
             typeRow
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
                 pokemonNameLabel
                 flavorTextLabel
+                Divider()
 //                physicalInfoRow
                 statsSection
+                Divider()
+                typeMatchupSection
             }
             .frame(maxWidth: .infinity)
             .padding(.leading)
@@ -70,6 +73,26 @@ struct PokemonDetialsView: View {
             ProgressView()
         }
         .frame(maxWidth: 150, maxHeight: 300)
+    }
+    
+    private var typeMatchupSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Type Matchups")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            if !model.typeImmunities.isEmpty {
+                immunitiesSection
+            }
+            
+            if !model.typeDoubleWeaknesses.isEmpty || !model.typeQuadrupleWeaknesses.isEmpty {
+                weaknessSection
+            }
+            
+            if !model.typeDoubleResistances.isEmpty || !model.typeQuadrupleResistances.isEmpty {
+                resistanceSection
+            }
+        }
     }
     
     private var physicalInfoRow: some View {
@@ -135,6 +158,85 @@ struct PokemonDetialsView: View {
         statRow("SPE", amount: model.speed)
     }
     
+    private var immunitiesSection: some View {
+        VStack(alignment: .leading) {
+            Text("Immune to:")
+                .font(.subheadline)
+                .fontWeight(.bold)
+            HStack {
+                Text("x0")
+                OverflowGrid(horizontalSpacing: 10) {
+                    ForEach(model.typeImmunities, id: \.self) { pokemonType in
+                        typeLabel(for: pokemonType)
+                            .frame(maxWidth: 75, maxHeight: 20)
+                    }
+                }
+            }
+        }
+    }
+    
+    private var weaknessSection: some View {
+        VStack(alignment: .leading) {
+            Text("Weak to:")
+                .font(.subheadline)
+                .fontWeight(.bold)
+            if !model.typeDoubleWeaknesses.isEmpty {
+                HStack {
+                    Text("x2")
+                    OverflowGrid(horizontalSpacing: 10) {
+                        ForEach(model.typeDoubleWeaknesses, id: \.self) { pokemonType in
+                            typeLabel(for: pokemonType)
+                                .frame(maxWidth: 75, maxHeight: 20)
+                        }
+                    }
+                }
+            }
+            
+            if !model.typeQuadrupleWeaknesses.isEmpty {
+                HStack {
+                    Text("x4")
+                    OverflowGrid(horizontalSpacing: 10) {
+                        ForEach(model.typeQuadrupleWeaknesses, id: \.self) { pokemonType in
+                            typeLabel(for: pokemonType)
+                                .frame(maxWidth: 75, maxHeight: 20)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private var resistanceSection: some View {
+        VStack(alignment: .leading) {
+            Text("Resistant to:")
+                .font(.subheadline)
+                .fontWeight(.bold)
+            if !model.typeDoubleResistances.isEmpty {
+                HStack {
+                    Text("x\u{00BD}")
+                    OverflowGrid(horizontalSpacing: 10) {
+                        ForEach(model.typeDoubleResistances, id: \.self) { pokemonType in
+                            typeLabel(for: pokemonType)
+                                .frame(maxWidth: 75, maxHeight: 20)
+                        }
+                    }
+                }
+            }
+            
+            if !model.typeQuadrupleResistances.isEmpty {
+                HStack {
+                    Text("x\u{00BC}")
+                    OverflowGrid(horizontalSpacing: 10) {
+                        ForEach(model.typeQuadrupleResistances, id: \.self) { pokemonType in
+                            typeLabel(for: pokemonType)
+                                .frame(maxWidth: 75, maxHeight: 20)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - Computed Vars
     
     private var imageURL: URL? {
@@ -165,7 +267,7 @@ struct PokemonDetialsView: View {
     }
     
     private func statBar(amount: Double, barColor: Color) -> some View {
-        let fractionCompleted = amount / Stats.MAX_STAT_VALUE
+        let fractionCompleted = amount / PokemonGameStats.MAX_STAT_VALUE
         return GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 Rectangle().frame(width: geometry.size.width, height: geometry.size.height)

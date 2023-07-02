@@ -50,8 +50,6 @@ class PokedexListViewModel: ObservableObject {
                     }
                 }
             }
-        } else {
-            print("LIST NOT FOUND")
         }
     }
     
@@ -76,7 +74,7 @@ class PokedexListViewModel: ObservableObject {
         }
     }
     
-    private func loadPokemonResult(from networkPokemon: SmallPokemonResult, completion: @escaping (PokemonResult?) async -> Void) async {
+    private func loadPokemonResult(from networkPokemon: PokemonNetworkResult, completion: @escaping (PokemonResult?) async -> Void) async {
         if let pokemon = await getPokemon(networkPokemon.name) {
             await completion(pokemon)
         }

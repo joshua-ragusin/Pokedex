@@ -14,4 +14,8 @@ extension String {
         
         return firstLetter + remainingLetters
     }
+    
+    func trim() -> String {
+        return self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
