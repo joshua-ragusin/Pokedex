@@ -14,3 +14,4 @@ This app features two views. The first is the Pokomon List which consists of a c
 * Ability to view shiny sprites in detail page
 * Ability to see all moves a Pokemon can learn
 * Improving the process of loading Pokemon info from the API
+* Unit tests
