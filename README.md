@@ -27,6 +27,7 @@ iPhone:
 ![gif1](https://github.com/joshua-ragusin/Pokedex/assets/130528752/8b435b22-ccbb-48b0-94c2-c42ef21929e8)
 ![gif2](https://github.com/joshua-ragusin/Pokedex/assets/130528752/6591ce36-1719-4b46-9958-a1dfce2819fb)
 
+
 # Neat things I would like to implement/improve in the future
 
 * The ability to favorite Pokemon and add them to a list
