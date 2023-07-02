@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PokedexListView: View {
     @StateObject private var model: PokedexListViewModel
+    @State private var searchText = ""
     
     init() {
         _model = StateObject(wrappedValue: PokedexListViewModel())
@@ -18,7 +19,7 @@ struct PokedexListView: View {
         // TODO: Fix issue where navigating away from app causes list to repeat
         NavigationView {
             NavigationStack {
-                List(model.pokemonList, id: \.id) { pokemon in
+                List(searchResults, id: \.id) { pokemon in
                     NavigationLink(value: pokemon) {
                         PokedexListCellView(pokemon)
                     }
@@ -30,6 +31,7 @@ struct PokedexListView: View {
                     PokemonDetialsView(pokemon)
                         .navigationTitle(pokemon.name.properCase)
                 }
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
         }
         .task(priority: .background) {
@@ -38,6 +40,14 @@ struct PokedexListView: View {
                     model.loadPokemonFromDB(id: id)
                 }
             }
+        }
+    }
+    
+    private var searchResults: [PokemonResult] {
+        if searchText.isEmpty {
+            return model.pokemonList
+        } else {
+            return model.filterPokemon(by: searchText)
         }
     }
 }

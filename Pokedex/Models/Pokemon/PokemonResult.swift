@@ -142,3 +142,9 @@ extension PokemonResult: TableRecord, FetchableRecord, PersistableRecord {
         imageString = row[Column.imageString.rawValue]
     }
 }
+
+extension PokemonResult: Comparable {
+    static func < (lhs: PokemonResult, rhs: PokemonResult) -> Bool {
+        return lhs.name < rhs.name
+    }
+}

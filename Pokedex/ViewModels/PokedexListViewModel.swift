@@ -20,6 +20,24 @@ class PokedexListViewModel: ObservableObject {
     
     private var pokemonListResult: PokemonListResult?
     
+    func filterPokemon(by searchParams: String) -> [PokemonResult] {
+        let searchText = searchParams.lowercased()
+        let filteredPokemon = pokemonList.filter { $0.name.contains(searchText) }
+        
+        return filteredPokemon.sorted {
+            switch ($0.name.hasPrefix(searchText), $1.name.hasPrefix(searchText)) {
+            case (true, true):
+                return $0 < $1
+            case (true, false):
+                return true
+            case (false, true):
+                return false
+            case (false, false):
+                return $0 < $1
+            }
+        }
+    }
+    
     func load(completion: @escaping (_ id: Int) -> Void) async {
         if let list = self.pokemonListResult {
             for networkPokemon in list.results {
