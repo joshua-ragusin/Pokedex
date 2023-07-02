@@ -16,23 +16,21 @@ struct PokedexListView: View {
     }
     
     var body: some View {
-        // TODO: Fix issue where navigating away from app causes list to repeat
-        NavigationView {
-            NavigationStack {
-                List(searchResults, id: \.id) { pokemon in
-                    NavigationLink(value: pokemon) {
-                        PokedexListCellView(pokemon)
-                    }
+        NavigationStack {
+            List(searchResults, id: \.id) { pokemon in
+                NavigationLink(value: pokemon) {
+                    PokedexListCellView(pokemon)
                 }
-                .frame(maxWidth: .infinity)
-                .listStyle(.plain)
-                .navigationBarTitle("Pokedex", displayMode: .inline)
-                .navigationDestination(for: PokemonResult.self) { pokemon in
-                    PokemonDetialsView(pokemon)
-                        .navigationTitle(pokemon.name.properCase)
-                }
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             }
+            .frame(maxWidth: .infinity)
+            .listStyle(.plain)
+            .navigationBarTitle("Pokedex", displayMode: .inline)
+            .navigationViewStyle(.stack)
+            .navigationDestination(for: PokemonResult.self) { pokemon in
+                PokemonDetialsView(pokemon)
+                    .navigationTitle(pokemon.name.properCase)
+            }
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
         .task(priority: .background) {
             await model.loadPokemonList {
