@@ -110,7 +110,6 @@ struct PokemonDetialsView: View {
         }
     }
     
-    // TODO: This can just be 1 function ...
     private var hpRow: some View {
         statRow("HP", amount: model.hp)
     }
