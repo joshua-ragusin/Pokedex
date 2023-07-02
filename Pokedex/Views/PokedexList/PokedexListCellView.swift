@@ -33,7 +33,6 @@ struct PokedexListCellView: View {
     
     // MARK: - Computed Views
     
-    // TODO: Make icons look better (they're too small rn)
     private var icon: some View {
         pokemonImage
             .scaledToFit()
@@ -42,12 +41,11 @@ struct PokedexListCellView: View {
     
     private var idLabel: some View {
         Text("#\(model.pokemon.id)")
-            .foregroundColor(.black)
+            .foregroundColor(.gray)
     }
     
     private var nameLabel: some View {
         Text(model.pokemon.name.properCase)
-            .foregroundColor(.black)
             .font(.title)
             .fontWeight(.medium)
     }
