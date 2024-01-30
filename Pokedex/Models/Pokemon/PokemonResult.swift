@@ -14,16 +14,16 @@ struct PokemonResult: Hashable {
     let name: String
     let height: Int
     let weight: Int
-    
     let imageString: String
-    
     let primaryTypeString: String
     let secondaryTypeString: String?
+    let favorite: Bool
+    
     
     var pokemonStats: PokemonGameStats? = nil
     var image: PokemonImage? = nil
     
-    init(id: Int, name: String, height: Int, weight: Int, imageString: String, primaryType: String, secondaryType: String?) {
+    init(id: Int, name: String, height: Int, weight: Int, imageString: String, primaryType: String, secondaryType: String?, favorite: Bool = false) {
         self.id = id
         self.name = name
         self.height = height
@@ -31,6 +31,7 @@ struct PokemonResult: Hashable {
         self.imageString = imageString
         self.primaryTypeString = primaryType
         self.secondaryTypeString = secondaryType
+        self.favorite = favorite
     }
     
     // MARK: - Computed Vars
@@ -105,6 +106,7 @@ extension PokemonResult: Codable {
             decodedStats.append(PokemonStat(stat))
         }
         
+        favorite = false
         pokemonStats = decodeStats(from: decodedStats, for: id)
     }
     
@@ -129,7 +131,7 @@ extension PokemonResult: TableRecord, FetchableRecord, PersistableRecord {
     static var databaseTableName = "pokemon"
     
     enum Column: String, SQLSpecificExpressible {
-        case id, name, primaryType, secondaryType, height, weight, imageString
+        case id, name, primaryType, secondaryType, height, weight, imageString, favorite
     }
     
     init(row: Row) throws {
@@ -140,6 +142,7 @@ extension PokemonResult: TableRecord, FetchableRecord, PersistableRecord {
         height = row[Column.height.rawValue]
         weight = row[Column.weight.rawValue]
         imageString = row[Column.imageString.rawValue]
+        favorite = row[Column.favorite.rawValue]
     }
 }
 

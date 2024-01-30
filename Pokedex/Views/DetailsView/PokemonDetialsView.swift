@@ -44,6 +44,13 @@ struct PokemonDetialsView: View {
                 model.saveFlavorText(text)
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: model.toggleFavorite) {
+                    Image(systemName: model.pokemon.favorite ? "star.fill" : "star")
+                }
+            }
+        }
     }
     
     // MARK: - Computed Views

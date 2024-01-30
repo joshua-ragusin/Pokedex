@@ -10,25 +10,24 @@ This app features two views. The first is the Pokomon List which consists of a c
 
 iPad:
 
-![Simulator Screenshot - iPad Air (5th generation) - 2023-07-02 at 15 27 09](https://github.com/joshua-ragusin/Pokedex/assets/130528752/f1e8ace4-7ad5-4ef5-a469-8af72297a3a3)
-![Simulator Screenshot - iPad Air (5th generation) - 2023-07-02 at 15 27 15](https://github.com/joshua-ragusin/Pokedex/assets/130528752/b59164d4-8e5a-4ca0-9ce2-d28b2a621517)
-
+![Simulator Screenshot - iPad Air (5th generation) - 2023-07-02 at 15 27 09](https://github.com/joshua-ragusin/Pokedex/assets/130528752/ae6315ad-9233-4942-ba02-e782460bd870)
+![Simulator Screenshot - iPad Air (5th generation) - 2023-07-02 at 15 27 15](https://github.com/joshua-ragusin/Pokedex/assets/130528752/b9569199-7cbd-427d-8939-c9ea6bd3665c)
 
 
 iPhone:
 
-![Simulator Screenshot - iPhone 14 Pro - 2023-07-02 at 15 30 53](https://github.com/joshua-ragusin/Pokedex/assets/130528752/3387e7f1-69ec-4e57-ab51-b8ad5a936eb7)
-![Simulator Screenshot - iPhone 14 Pro - 2023-07-02 at 15 31 01](https://github.com/joshua-ragusin/Pokedex/assets/130528752/db9e0fac-e449-4ecc-9cef-82369e928fde)
-
+![Simulator Screenshot - iPhone 14 Pro - 2023-07-02 at 15 30 53](https://github.com/joshua-ragusin/Pokedex/assets/130528752/3325361c-d904-446c-bf3a-e828fc430d99)
+![Simulator Screenshot - iPhone 14 Pro - 2023-07-02 at 15 31 01](https://github.com/joshua-ragusin/Pokedex/assets/130528752/678cb512-2066-4bdd-8b01-9e4202622504)
 
 
 # Demo
 
-![gif1](https://github.com/joshua-ragusin/Pokedex/assets/130528752/8b435b22-ccbb-48b0-94c2-c42ef21929e8)
-![gif2](https://github.com/joshua-ragusin/Pokedex/assets/130528752/6591ce36-1719-4b46-9958-a1dfce2819fb)
+![gif1](https://github.com/joshua-ragusin/Pokedex/assets/130528752/8a1100ee-ee3f-46cd-a39d-545547c605d5)
+![gif2](https://github.com/joshua-ragusin/Pokedex/assets/130528752/376365b1-8cf1-40b6-9ec9-009fc3fc769e)
 
 
-# Neat things I would like to implement/improve in the future
+
+# Neat things I would like to add in the future
 
 * The ability to favorite Pokemon and add them to a list
 * The ability to make a team of 6 pokemon and analyze it for weak points (bad type matchups)

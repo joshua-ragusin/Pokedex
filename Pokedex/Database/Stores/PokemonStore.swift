@@ -53,4 +53,15 @@ class LivePokemonStore: PokemonStore {
                 """, arguments: [pokemon.id, pokemon.name, pokemon.primaryTypeString, pokemon.secondaryTypeString, pokemon.height, pokemon.weight, pokemon.imageString])
         }
     }
+    
+    func updateFavorite(for id: Int64, to newFavorite: Bool) throws {
+        try queue.write { db in
+            try db.execute(sql:
+                """
+                UPDATE pokemon
+                    SET favorite = ?
+                    WHERE pokemon.id = ?
+                """, arguments: [newFavorite, id])
+        }
+    }
 }

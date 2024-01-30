@@ -14,6 +14,7 @@ class PokemonDetailViewModel: ObservableObject {
     private let statsStore = LiveStatsStore()
     private let flavorTextAPI = LivePokedexFlavorTextAPI()
     private let flavorTextStore = LiveFlavorTextStore()
+    private let pokemonStore = LivePokemonStore()
     
     let pokemon: PokemonResult
     
@@ -41,11 +42,11 @@ class PokemonDetailViewModel: ObservableObject {
     }
     
     func saveFlavorText(_ text: PokemonFlavorText) {
-        do {
-            try flavorTextStore.saveFlavorText(text)
-        } catch {
-            print(error)
-        }
+        try? flavorTextStore.saveFlavorText(text)
+    }
+    
+    func toggleFavorite() {
+        try? pokemonStore.updateFavorite(for: Int64(pokemon.id), to: !pokemon.favorite)
     }
     
     // MARK: - Computed Vars
@@ -91,7 +92,7 @@ class PokemonDetailViewModel: ObservableObject {
         var resistanceSet = Set(typeResistances)
         
         let typeWeaknesses = pokemon.primaryType.getDefensiveWeaknesses() + (pokemon.secondaryType?.getDefensiveWeaknesses() ?? [PokemonTypes]())
-        var weaknessSet = Set(typeWeaknesses)
+        let weaknessSet = Set(typeWeaknesses)
         
         for pokemonType in weaknessSet {
             if resistanceSet.contains(pokemonType) {

@@ -25,54 +25,7 @@ class DatabaseManager {
     }
     
     static private func performMigrations() {
-        var migrator = DatabaseMigrator()
-        
-        migrator.eraseDatabaseOnSchemaChange = true
-        
-        migrator.registerMigration("01Migration-Create-Pokemon-Table") { db in
-            try db.create(table: "pokemon") { t in
-                t.column("id", .integer).notNull()
-                    .primaryKey()
-                t.column("name", .text).notNull()
-                t.column("primaryType", .text).notNull()
-                t.column("secondaryType", .text)
-                t.column("height", .integer).notNull()
-                t.column("weight", .integer).notNull()
-                t.column("imageString", .text).notNull()
-            }
-        }
-        
-        migrator.registerMigration("02Migration-Create-Pokemon-Image-Table") { db in
-            try db.create(table: "pokemonImage") { t in
-                t.column("id", .integer).notNull()
-                    .primaryKey()
-                t.column("imageData", .blob).notNull()
-            }
-        }
-        
-        migrator.registerMigration("03Migration-Create-Stats-Table") { db in
-            try db.create(table: "stats") { t in
-                t.column("id", .integer).notNull()
-                    .primaryKey()
-                t.column("hp", .integer).notNull()
-                t.column("attack", .integer).notNull()
-                t.column("defense", .integer).notNull()
-                t.column("spAttack", .integer).notNull()
-                t.column("spDefense", .integer).notNull()
-                t.column("speed", .integer).notNull()
-
-            }
-        }
-        
-        migrator.registerMigration("03Migration-Create-Flavor-Text-Table") { db in
-            try db.create(table: "flavorText") { t in
-                t.column("id", .integer)
-                    .primaryKey(autoincrement: true)
-                t.column("name", .text).notNull()
-                t.column("text", .blob).notNull()
-            }
-        }
-        
-        try? migrator.migrate(dbQueue)
+        let runner = MigrationRunner(queue: dbQueue)
+        runner.performMigrations()
     }
 }
